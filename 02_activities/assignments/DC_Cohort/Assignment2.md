@@ -59,6 +59,31 @@ The store wants to keep customer addresses. Propose two architectures for the CU
 Your answer...
 ```
 
+Type 1: Overwriting old data
+Overwriting the old data seems to be the simplest solution because it just involves replacing the old data with new data if the person changes their address. The old address data are lost. Here, the number of rows reflects the number of customers, where each customer just has one row.
+
+CUSTOMER_ADDRESS
+customer_id (FK to customers)
+street_address
+city_or_town
+province_or_state
+postal_code
+country
+
+Type 2: Retaining changes
+Retaining previous data increases the amount of information to store and handle, but it allows users to go backwards through the dataset and retreive information on old addresses, and potentially number of moves. The number of rows here reflects the number of customers plus the number of times customers have moved, where a single customer could have multiple rows if they have moved multiple times. Customers who continue to move will add more rows.
+
+CUSTOMER_ADDRESS
+customer_address_id (PK)
+customer_id (FK to customers)
+street_address
+city_or_town
+province_or_state
+postal_code
+country
+is_this_current_address
+date_address_updated
+
 ***
 
 ## Section 2:
@@ -193,3 +218,11 @@ Consider, for example, concepts of labour, bias, LLM proliferation, moderating c
 ```
 Your thoughts...
 ```
+
+Neural nets are just people all the way down
+
+I think the ethical issues most prevalent in this story can be summarized as the hidden sources of neural network training, how far back you have to go in order to find the real sources of training data, and the introduction of subconscious biases at every additional step. The construction of a large training dataset that associates key words with images is a great premise and clearly benifits downstream processes involving AI, but the methods in doing so are critical. When the dataset is constructed by hundreds of thousands of people manually identifying pictures and associating them with keywords, the snap-judgments made by these people will carry through their own biases, stereotypes, and associations. Most of these are likely harmless, but it is inevitable that some will carry harmful connotations. In the situation discussed here, the problem was made worse by the incorporation of the Brown Corpus to construct the one million key word database, which was established in the 1960s and does not reflect cultural changes that have occurred since them. The result involved the inclusion of offensive terms that biased constructed AI algorithms to favour some of these outdated and harmful societal norms from the past, and emphasizes the need to ensure a system is present to fix these types of issues.
+
+These systematic issues are unfortuantely common in AI construction, and neural networks are only as good as their training data. I took a course early in my PhD on biases in STEM and how to address them, and we frequently discussed how baises in training data can cause downstream affects. A famous example in every day life comes from motion activated appliances like soap dispensers or hand dryers, where some models were unable to detect the hands of people with dark skin tones. This issue occured because the staff that constructed and programmed the appliances almost entirely had light skin, and without trying, the programming and testing procedures biased their result against other skin tones. The issue highlights the importance of considering diversity in construction of technology, but also adequately testing it using diverse real-world data.
+
+My big take-away from this article was the importance of ensuring the original sources of incorporated data are known and discussed honestly in the context of model construction, and potential biases in the original data are discussed. Such biases may be obvious, such as differences in social norms between the 1960s and 2020s, but can subtle though still impactful if data are collected today and intrinsic biases left unacounted for. 
